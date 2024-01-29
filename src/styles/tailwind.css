@@ -1,0 +1,105 @@
+/* styles.css */
+
+/* En pantallas pequeñas, aplica un diseño de columna */
+.container-column {
+  display: flex;
+  flex-direction: column;
+}
+
+/* En pantallas medianas y más grandes, aplica un diseño de fila */
+@media (min-width: 768px) {
+  .container-column {
+    flex-direction: row;
+  }
+}
+
+/* Ajusta los márgenes según sea necesario */
+.container-column > div {
+  margin-bottom: 1rem; /* Margen inferior entre los componentes en diseño de columna */
+}
+
+/* Ajusta los márgenes según sea necesario */
+@media (min-width: 768px) {
+  .container-column > div {
+    margin-bottom: 0; /* Elimina el margen inferior en diseño de fila */
+    margin-right: 1rem; /* Margen derecho entre los componentes en diseño de fila */
+  }
+}
+
+
+
+/* Estilo de centrado vertical y horizontal para SensorData */
+.sensor-data {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px; /* Ajusta el tamaño de la fuente según tus necesidades */
+  padding: 10px; /* Ajusta el espaciado interno según tus necesidades */
+}
+
+/* Resto de tus estilos */
+:root {
+  --color-background: #f5f5f5;
+  --color-card: #e9e9e9;
+  --color-primary: #006666;
+  --color-secondary: #008584;
+  --color-gray: #cccccc;
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+  display: flex;
+  align-items: center; /* Centra verticalmente el contenido */
+  justify-content: center;
+  min-height: 100vh;
+  margin: 0;
+  background-color: var(--color-background);
+}
+
+.container {
+  max-width: 800px;
+  padding: 18px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin: 50px auto; /* Margen vertical y centrado horizontal */
+}
+
+.header {
+  font-family: "Roboto", sans-serif;
+  font-size: 27px;
+  font-weight: bold;
+  text-align: center;
+  color: var(--color-primary);
+}
+
+.DatosEnVivo {
+  font-family: "Roboto", sans-serif;
+  font-size: 17px;
+  text-align: center;
+  color: var(--color-primary);
+}
+
+.connection-status {
+  margin-bottom: 20px;
+}
+
+.sensor-data {
+  background-color: var(--color-card);
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  /* Agrega estilos de centrado vertical y horizontal */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px; /* Ajusta el tamaño de la fuente según tus necesidades */
+  padding: 10px; /* Ajusta el espaciado interno según tus necesidades */
+}
+
+.historical-data {
+  margin-top: 20px;
+}
+
+/* Agrega más estilos según sea necesario */
