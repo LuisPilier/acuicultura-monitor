@@ -30,7 +30,7 @@ function Alerts({ sensorData }) {
     // Validar nivel de pH
     if (
       sensorData.nivelPH !== undefined &&
-      (sensorData.nivelPH < 6 || sensorData.nivelPH > 700.5)
+      (sensorData.nivelPH < 6 || sensorData.nivelPH > 7.5)
     ) {
       showPHLevelAlert();
     }
