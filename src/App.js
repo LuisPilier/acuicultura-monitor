@@ -1,53 +1,43 @@
-// App.js
 import React, { useEffect, useState } from 'react';
 import SensorData from './components/SensorData';
 import HistoricalData from './components/HistoricalData';
 import LineChart from './components/LineChart';
-import Alerts from './components/Alerts'; // Importa el nuevo componente Alerts
-import Swal from 'sweetalert2';
-import withReactContent from 'sweetalert2-react-content';
+import Alerts from './components/Alerts';
+import io from 'socket.io-client';
 
-const MySwal = withReactContent(Swal);
+const socket = io('http://localhost:3001', {
+  withCredentials: true,
+  extraHeaders: {
+    'Access-Control-Allow-Origin': 'http://localhost:3000',
+  },
+  transports: ['websocket'],
+});
 
-function App({ socket }) {
+function App() {
   const [sensorData, setSensorData] = useState({});
   const [historicalData, setHistoricalData] = useState([]);
 
   useEffect(() => {
-    // Cargar datos históricos desde localStorage al iniciar
     const storedHistoricalData = JSON.parse(localStorage.getItem('historicalData')) || [];
     setHistoricalData(storedHistoricalData);
 
-    // Manejar eventos del socket para los datos del sensor
     socket.on('sensorData', (data) => {
       console.log('Datos del sensor recibidos:', data);
       setSensorData(data);
-
-      // Actualizar datos históricos
       updateHistoricalData(data);
     });
 
     return () => {
-      // Desuscribirse del evento cuando el componente se desmonta
       socket.off('sensorData');
     };
-  }, [socket]);
+  }, []);
 
   const updateHistoricalData = (newData) => {
-    // Obtener datos históricos almacenados actualmente
     const storedHistoricalData = JSON.parse(localStorage.getItem('historicalData')) || [];
-
-    // Obtener la fecha actual
     const currentDate = new Date();
-    const formattedDate = currentDate.toLocaleString(); // Puedes ajustar el formato según tus necesidades
-
-    // Agregar la fecha al nuevo dato
+    const formattedDate = currentDate.toLocaleString();
     const newDataWithDate = { ...newData, fecha: formattedDate };
-
-    // Mantener solo los últimos 5 registros, agregando el nuevo dato al principio
     const updatedData = [newDataWithDate, ...storedHistoricalData.slice(0, 4)];
-
-    // Actualizar estado y almacenar en localStorage
     setHistoricalData(updatedData);
     localStorage.setItem('historicalData', JSON.stringify(updatedData));
   };
@@ -66,7 +56,6 @@ function App({ socket }) {
       <div className="container bg-white p-8 rounded-lg shadow-lg text-center mt-4 w-full h-96">
         <LineChart data={historicalData} />
       </div>
-      {/* Añade el componente Alerts */}
       <Alerts sensorData={sensorData} />
     </div>
   );
